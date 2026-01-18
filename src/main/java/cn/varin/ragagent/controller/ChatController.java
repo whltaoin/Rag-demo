@@ -22,7 +22,12 @@ public class ChatController {
     // 上下文问答+打印日志
     @GetMapping("/log")
     public String log(String content,String chatid) {
-        return   agentClient.getMessagewAndLog(content, chatid,10);
+        return   agentClient.getLog(content, chatid,10);
+    }
+    // 上下文问答+基于内存的本地知识库查询
+    @GetMapping("/localRag")
+    public String localRag(String content,String chatid) {
+        return   agentClient.getSimpleVectorStore(content, chatid,10);
     }
 
 }

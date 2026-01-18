@@ -13,7 +13,7 @@ import java.util.List;
 
 @Configuration
 /**
-* SimpleVectorStore基于内存读写的向量数据库
+*
 */
 
 public class VectorStoreConfig {
@@ -22,9 +22,16 @@ public class VectorStoreConfig {
     private DocumentLoader documentLoader;
     // 注册VectorSotre
 
-    //注意：EmbeddingModel使用SpringAI的，不要使用alibaba的
+
+
+    /**
+     * SimpleVectorStore基于内存读写的向量数据库
+     * 注意：EmbeddingModel使用SpringAI的，不要使用alibaba的
+     * @param environment
+     * @return
+     */
     @Bean
-    VectorStore iALDAAppVectorStore(EmbeddingModel environment) {
+    VectorStore memorySimpleVectorStore(EmbeddingModel environment) {
         VectorStore  vectorStore = SimpleVectorStore.builder(environment).build();
 
 
