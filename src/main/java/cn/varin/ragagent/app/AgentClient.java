@@ -1,6 +1,7 @@
 package cn.varin.ragagent.app;
 
 
+import cn.varin.ragagent.Advisors.LogAdvisor;
 import cn.varin.ragagent.common.Prompt;
 import com.alibaba.cloud.ai.dashscope.rag.DashScopeDocumentRetrievalAdvisor;
 import jakarta.annotation.Resource;
@@ -30,7 +31,9 @@ public class AgentClient {
         this.chatClient = chatClient
                 .defaultSystem(Prompt.SYSTEM_PROPERTY)
                 .defaultAdvisors(
-                        new MessageChatMemoryAdvisor(new InMemoryChatMemory())
+                        new MessageChatMemoryAdvisor(new InMemoryChatMemory())      ,
+                        //  // 添加自定Log义advisor
+                        new LogAdvisor()
 
                 )
                 .build();
