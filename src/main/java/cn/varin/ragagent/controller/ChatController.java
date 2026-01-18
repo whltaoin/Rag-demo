@@ -14,9 +14,15 @@ import java.util.UUID;
 public class ChatController {
     @Resource
     private AgentClient agentClient;
+    // 普通上下文联系问答
     @GetMapping("/message")
-    public String test(String content) {
-      return   agentClient.getMessage(content, UUID.randomUUID().toString(),10);
+    public String message(String content,String chatid) {
+      return   agentClient.getMessage(content, chatid,10);
+    }
+    // 上下文问答+打印日志
+    @GetMapping("/log")
+    public String log(String content,String chatid) {
+        return   agentClient.getMessagewAndLog(content, chatid,10);
     }
 
 }

@@ -31,16 +31,15 @@ public class AgentClient {
         this.chatClient = chatClient
                 .defaultSystem(Prompt.SYSTEM_PROPERTY)
                 .defaultAdvisors(
-                        new MessageChatMemoryAdvisor(new InMemoryChatMemory())      ,
-                        //  // 添加自定Log义advisor
-                        new LogAdvisor()
+                        new MessageChatMemoryAdvisor(new InMemoryChatMemory())
+
 
                 )
                 .build();
     }
 
     /**
-     * 问答
+     * 具有上下文联系的问答
      * @param content 用户提示词
      * @param chatId  随机id
      * @return
@@ -52,7 +51,24 @@ public class AgentClient {
 
                         .param("chat_memory_response_size", number)).call().chatResponse();
         String text = chatResponse.getResult().getOutput().getText();
-        log.info("text:{}", text);
+        // log.info("text:{}", text);
+        return text;
+    }
+    /**
+     * 具有上下文联系的问答和输入日子功能
+     * @param content 用户提示词
+     * @param chatId  随机id
+     * @return
+     */
+    public String getMessagewAndLog(String content,String chatId, Integer number) {
+        ChatResponse chatResponse = this.chatClient.prompt()
+                .user(content)
+                .advisors(advisor -> advisor.param("chat_memory_conversation_id", chatId)
+                        .advisors(new LogAdvisor())
+
+                        .param("chat_memory_response_size", number)).call().chatResponse();
+        String text = chatResponse.getResult().getOutput().getText();
+      //   log.info("text:{}", text);
         return text;
     }
 }

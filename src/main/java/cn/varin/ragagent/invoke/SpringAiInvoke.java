@@ -12,14 +12,15 @@ import org.springframework.stereotype.Component;
  * SpringAi 灵积接入示例
  */
 @Component
-public class SpringAiInvoke implements CommandLineRunner {
+public class SpringAiInvoke  {
+// public class SpringAiInvoke implements CommandLineRunner {
 
 
     @Resource
     private ChatModel dashScopeChatModel;
 
 
-    @Override
+    // @Override
     public void run(String... args) throws Exception {
 
         AssistantMessage hello = dashScopeChatModel.call(new Prompt("解释AI一词"))
