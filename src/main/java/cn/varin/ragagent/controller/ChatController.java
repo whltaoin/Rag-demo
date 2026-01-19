@@ -3,6 +3,7 @@ package cn.varin.ragagent.controller;
 import cn.varin.ragagent.app.AgentClient;
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,11 @@ public class ChatController {
     @GetMapping("/localRag")
     public String localRag(String content,String chatid) {
         return   agentClient.getSimpleVectorStore(content, chatid,10);
+    }
+    // 上下文问答+基于milvus向量数据库
+    @GetMapping("/milvus")
+    public String milvus(String content,String chatid) {
+        return   agentClient.getMilvusVectorStore(content, chatid,10);
     }
 
 }

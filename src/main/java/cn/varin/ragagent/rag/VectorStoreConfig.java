@@ -33,10 +33,9 @@ public class VectorStoreConfig {
     @Bean
     VectorStore memorySimpleVectorStore(EmbeddingModel environment) {
         VectorStore  vectorStore = SimpleVectorStore.builder(environment).build();
-
-
         List<Document> documents = documentLoader.loadDocuments();
         vectorStore.add(documents);
+
         return vectorStore;
 
     }

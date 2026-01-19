@@ -1,5 +1,18 @@
 spring:
   ai:
+    vectorstore:
+      milvus:
+        client:
+          host: "localhost" # default: localhost
+          port: 19530 # default: 19530
+          username: "" # default: root
+          password: "" # default: milvus
+        databaseName: "default"
+        collectionName: "vector_store" # default: vector_store
+        embeddingDimension: 1536 # default: 1536
+        indexType: IVF_FLAT # default: IVF_FLAT
+        metricType: COSINE # default: COSINE
+        initializeSchema: true # 自动创建集合
     dashscope:
       api-key: "sk-5607fc52eb9f447696b22328c8cd3b79" # 灵积APIkey
       chat:

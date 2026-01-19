@@ -75,7 +75,7 @@ public class AgentClient {
 
 
     /**
-     * 具有上下文联系的问答
+     * 具有上下文联系的问答+查询本地知识库
      * @param content 用户提示词
      * @param chatId  随机id
      * @return
@@ -88,6 +88,26 @@ public class AgentClient {
                 .user(content)
                 .advisors(advisor -> advisor.param("chat_memory_conversation_id", chatId)
                         .advisors(new QuestionAnswerAdvisor(memorySimpleVectorStore  ))
+
+                        .param("chat_memory_response_size", number)).call().chatResponse();
+        String text = chatResponse.getResult().getOutput().getText();
+        // log.info("text:{}", text);
+        return text;
+    }
+
+    /**
+     * 具有上下文联系的问答+查询向量数据库milvus
+     * @param content 用户提示词
+     * @param chatId  随机id
+     * @return
+     */
+    @Resource
+    private VectorStore milvusVectorStore;;
+    public String getMilvusVectorStore(String content,String chatId, Integer number) {
+        ChatResponse chatResponse = this.chatClient.prompt()
+                .user(content)
+                .advisors(advisor -> advisor.param("chat_memory_conversation_id", chatId)
+                        .advisors(new QuestionAnswerAdvisor(milvusVectorStore  ))
 
                         .param("chat_memory_response_size", number)).call().chatResponse();
         String text = chatResponse.getResult().getOutput().getText();

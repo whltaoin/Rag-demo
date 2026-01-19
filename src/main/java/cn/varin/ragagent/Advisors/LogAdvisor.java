@@ -6,7 +6,7 @@ import org.springframework.ai.chat.model.MessageAggregator;
 import reactor.core.publisher.Flux;
 
 @Slf4j
-public class LogAdvisor implements CallAroundAdvisor, StreamAroundAdvisor {
+public class LogAdvisor implements CallAroundAdvisor {
     /**
      * 非流式同步方法
      * @param advisedRequest the advised request
@@ -24,18 +24,7 @@ public class LogAdvisor implements CallAroundAdvisor, StreamAroundAdvisor {
         return advisedResponse;
     }
 
-    /**
-     * 流式异步方法
-     * @param advisedRequest the advised request
-     * @param chain the chain of advisors to execute
-     * @return
-     */
-    @Override
-    public Flux<AdvisedResponse> aroundStream(AdvisedRequest advisedRequest, StreamAroundAdvisorChain chain) {
-        this.beforeLog(advisedRequest);
-        Flux<AdvisedResponse> flux = chain.nextAroundStream(advisedRequest);
-      return (new MessageAggregator()).aggregateAdvisedResponse(flux, this::afterLog);
-    }
+
 
 
 
